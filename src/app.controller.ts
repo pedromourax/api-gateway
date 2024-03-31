@@ -1,8 +1,9 @@
-import { Body, Controller, Get, Logger, Post } from '@nestjs/common';
+import { Body, Controller, Get, Logger, Param, Post, Query } from '@nestjs/common';
 import { ClientProxy, ClientProxyFactory, Transport } from '@nestjs/microservices';
 import { CriarCategoriaDto } from './dtos/criar-categoria.dto';
+import { Observable } from 'rxjs';
 
-@Controller('api/v1')
+@Controller('api/v1/categorias')
 export class AppController {
 
   private logger = new Logger(AppController.name);
@@ -13,16 +14,23 @@ export class AppController {
     this.clientAdminBackend = ClientProxyFactory.create({
       transport: Transport.RMQ,
       options: {
-        urls: ['amqp://user:gVndBrn6v6B+@54.144.53.194:5672/smartranking'],
+        urls: ['amqp://user:gVndBrn6v6B+@54.160.160.41:5672/smartranking'],
         queue: 'admin-backend',
       }
     }
     )
   }
 
-  @Post('categorias')
+  @Post()
   async criarCategoria(@Body() criarCategoria: CriarCategoriaDto) {
     return await this.clientAdminBackend.emit('criar-categoria', criarCategoria)
+  }
+
+  @Get()
+  consultarCategorias(@Query('idCategoria') idCategoria: string): Observable<any> {
+
+    return this.clientAdminBackend.send('consultar-categoria', idCategoria ? idCategoria : '')
+
   }
 
 
