@@ -9,7 +9,7 @@ export class atualizarCategoriaDto {
 
     @IsArray()
     @ArrayMinSize(1)
-    evento: Array<Evento>
+    eventos: Array<Evento>
 
 }
 
