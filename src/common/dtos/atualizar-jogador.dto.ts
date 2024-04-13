@@ -2,13 +2,16 @@ import { IsNotEmpty, IsOptional, IsPhoneNumber } from "class-validator";
 
 export class atualizarJogadorDto {
 
-    @IsNotEmpty()
+    @IsOptional()
     @IsPhoneNumber("BR", { message: "Número de telefone inválido" })
-    telefone: string;
-
-    @IsNotEmpty()
-    nome: string;
+    telefone?: string;
 
     @IsOptional()
-    categoria: string
+    nome?: string;
+
+    @IsOptional()
+    categoria?: string
+
+    @IsOptional()
+    urlFotoPerfil?: string
 }
