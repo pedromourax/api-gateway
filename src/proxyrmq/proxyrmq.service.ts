@@ -9,11 +9,10 @@ export class ClientProxySmartRanking {
         return ClientProxyFactory.create({
             transport: Transport.RMQ,
             options: {
-                urls: ['amqp://user:gVndBrn6v6B+@54.160.160.41:5672/smartranking'],
+                urls: [`amqp://${process.env.RABBITMQ_USER}:${process.env.RABBITMQ_PASSWORD}@${process.env.RABBITMQ_URL}`],
                 queue: 'admin-backend',
             }
         }
         )
     }
-
 }
